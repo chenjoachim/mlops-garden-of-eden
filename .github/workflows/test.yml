@@ -11,6 +11,9 @@ jobs:
   validate-and-test:
     runs-on: ubuntu-latest
     environment: dev
+    env:
+      DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
+      DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
     
     steps:
     - uses: actions/checkout@v5
@@ -23,10 +26,6 @@ jobs:
     - name: Install Databricks CLI
       run: |
         curl -fsSL https://raw.githubusercontent.com/databricks/setup-cli/main/install.sh | sh
-    
-    - name: Configure Databricks CLI
-      run: |
-        databricks configure --host ${{ secrets.DATABRICKS_HOST }} --token ${{ secrets.DATABRICKS_TOKEN }}
     
     - name: Validate DAB Bundle
       run: |
