@@ -55,15 +55,3 @@ jobs:
           echo "Test job failed with result: $RESULT"
           exit 1
         fi
-    
-    - name: Comment PR with Results
-      if: github.event_name == 'pull_request'
-      uses: actions/github-script@v8
-      with:
-        script: |
-          github.rest.issues.createComment({
-            issue_number: context.issue.number,
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            body: '✅ Both DAB jobs completed successfully!\n\n- Test Job Run ID: ${{ steps.test_job.outputs.test_run_id }}\n- RunExperiments Job Run ID: ${{ steps.experiments_job.outputs.experiments_run_id }}'
-          })
